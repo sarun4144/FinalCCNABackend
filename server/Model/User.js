@@ -6,10 +6,9 @@ const UserSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    name: {
+    username: {
         type: String,
         required: true,
-        unique: true
     },
     password: {
         type: String,
@@ -19,6 +18,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "user"
     },
+    enabled: {
+        type: Boolean,
+        default: false,
+      },
     date: {
         type: Date,
         default: Date.now

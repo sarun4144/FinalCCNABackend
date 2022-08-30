@@ -5,7 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 const { readdirSync } = require('fs');
 const Conectdatabase = require('./Database/Db');
-const Mymodule = require('../Backend/Module/getCurrentTime')
+const Mymodule = require('./Module/getCurrentTime')
 
 //app
 const app = express();

@@ -9,7 +9,7 @@ function auth (req, res, next){
     }
     const decoded = jwt.verify(token, 'SecretToken');
     console.log("middleware", decoded);
-    req.user  = decoded.user
+    req.user = decoded.user
     next()
   } catch (err) {
     res.status(401).send("Token ไม่ถูกต้อง");

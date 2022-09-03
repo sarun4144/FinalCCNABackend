@@ -34,7 +34,7 @@ exports.register = async (req, res) => {
       const payload = {
         user:{
             email:user.email,
-            username: user.name,
+            username: user.username,
             role: user.role
         }
     }
@@ -43,7 +43,7 @@ exports.register = async (req, res) => {
             if (err) {
                  throw err;
             }  
-            res.json({ token });
+            res.json({ token,payload });
 
         });
 
@@ -65,7 +65,7 @@ exports.register = async (req, res) => {
                 Euser: {
                     id: Euser._id,
                     email: Euser.email,
-                    username: Euser.name,
+                    username: Euser.username,
                     role: Euser.role
                 }
             }

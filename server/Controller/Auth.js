@@ -1,7 +1,6 @@
 const User = require('../Model/User')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 exports.register = async (req, res) => {
       const { email,username,password } = req.body;
       try{
@@ -48,25 +47,27 @@ exports.register = async (req, res) => {
         });
 
     }
+
+
     exports.login = async (req, res) => {
         try {
           const { email, password } = req.body;
-          var Euser = await User.findOneAndUpdate({ email }, { new: true });
-          if (Euser && Euser.enabled) {
+          var user = await User.findOneAndUpdate({ email }, { new: true });
+          if (user && user.enabled) {
             
             // Check Password
-            const isMatch = await bcrypt.compare(password, Euser.password);
+            const isMatch = await bcrypt.compare(password, user.password);
       
             if (!isMatch) {
               return res.status(400).send("Password ไม่ถูกต้อง");
             }
             // Payload
             const payload = {
-                Euser: {
-                    id: Euser._id,
-                    email: Euser.email,
-                    username: Euser.username,
-                    role: Euser.role
+              user: {
+                    id: user._id,
+                    email: user.email,
+                    username: user.username,
+                    role: user.role
                 }
             }
             // Generate Token
@@ -86,5 +87,43 @@ exports.register = async (req, res) => {
           res.status(500).send("Server Error!");
         }
       }
-      
-       
+
+    exports.currentUser = async (req, res) => {
+      try {
+        const user = await User.findOne({ username: req.user.username })
+        .select('-password').exec();
+        console.log("Controller",user); 
+        res.send(user)
+      } catch (err) {
+        console.log(err);
+        res.status(500).send("Server Error!");
+      }
+      }
+
+    exports.listUser = async (req, res) => {
+        try {
+          
+          res.send("list Get User");
+        } catch (err) {
+          console.log(err);
+          res.status(500).send("Server Error!");
+        }
+      }
+
+    exports.editUser = async (req, res) => {
+        try {
+          res.send(req.user);
+        } catch (err) {
+          console.log(err);
+          res.status(500).send("Server Error!");
+        }
+      }
+
+    exports.deleteUser = async (req, res) => {
+        try {
+          res.send("remove User");
+        } catch (err) {
+          console.log(err);
+          res.status(500).send("Server Error!");
+        }
+      }

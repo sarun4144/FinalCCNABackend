@@ -87,12 +87,12 @@ exports.register = async (req, res) => {
           res.status(500).send("Server Error!");
         }
       }
-
+      //admin and user use togather
     exports.currentUser = async (req, res) => {
       try {
         const user = await User.findOne({ username: req.user.username })
         .select('-password').exec();
-        console.log("Controller",user); 
+        console.log("Controller-User",user); 
         res.send(user)
       } catch (err) {
         console.log(err);
@@ -100,30 +100,5 @@ exports.register = async (req, res) => {
       }
       }
 
-    exports.listUser = async (req, res) => {
-        try {
-          
-          res.send("list Get User");
-        } catch (err) {
-          console.log(err);
-          res.status(500).send("Server Error!");
-        }
-      }
 
-    exports.editUser = async (req, res) => {
-        try {
-          res.send(req.user);
-        } catch (err) {
-          console.log(err);
-          res.status(500).send("Server Error!");
-        }
-      }
-
-    exports.deleteUser = async (req, res) => {
-        try {
-          res.send("remove User");
-        } catch (err) {
-          console.log(err);
-          res.status(500).send("Server Error!");
-        }
-      }
+   

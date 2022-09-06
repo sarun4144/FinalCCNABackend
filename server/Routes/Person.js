@@ -6,9 +6,9 @@ const { create,list, read, update,remove,} = require('../Controller/Person');
 const { auth } = require('../Middleware/Auth')
 
 router.get("/person",auth,list);
-router.get("/person/:id", auth,read);
-router.post("/person",  auth,create);
-router.put("/person/:id", auth,update);
-router.delete("/person/:id", auth,remove);
+router.get("/person/:id", read);
+router.post("/person",  create);
+router.put("/person/:id", update);
+router.delete("/person/:id", remove);
 
 module.exports = router;

@@ -92,7 +92,7 @@ exports.register = async (req, res) => {
       try {
         const user = await User.findOne({ username: req.user.username })
         .select('-password').exec();
-        console.log("Controller-User",user); 
+        console.log("Controller-Current",user); 
         res.send(user)
       } catch (err) {
         console.log(err);

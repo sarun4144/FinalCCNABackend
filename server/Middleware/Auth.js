@@ -8,7 +8,7 @@ function auth (req, res, next){
       return res.status(401).send('ไม่ได้รับ Token, ปฏิเสธการยืนยันตัวตน');
     }
     const decoded = jwt.verify(token, 'SecretToken');
-    console.log("Current-User", decoded);
+    console.log("Current-Auth", decoded);
     req.user = decoded.user
     next()
   } catch (err) {
@@ -21,8 +21,8 @@ exports.adminCheck = async(req, res, next) => {
   try {
     const { username } = req.user
     const adminUser = await User.findOne({ username }).exec()
-    if(adminUser.role !== 'admin'){
-      res.status(403)
+    if(adminUser.role !== 'admin'){ 
+      res.status(403).send(err,'ปฏิเสธกรยืนยันตัวตน')
     } else{
       next()
     }

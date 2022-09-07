@@ -1,4 +1,5 @@
 
+const User = require("../Model/User");
 exports.create = async (req, res) => {
     try {
         // Code
@@ -11,23 +12,25 @@ exports.create = async (req, res) => {
 };
 exports.list = async (req, res) => {
     try {
-        // Code
-        res.send('Hello list person')
-      } catch (err) {
-        console.log(err);
-        res.status(500).send("Server Error!");
-      }
+    // Code
+      const user = await User.find({}).select("-password").exec();
+      res.send(user);
+    }catch (err) {
+      console.log(err);
+      res.status(500).send("Server Error!");
+  }
    
 };
 exports.read = async (req, res) => {
-    try {
-        // Code
-        res.send('Hello read person')
-      } catch (err) {
-        console.log(err);
-        res.status(500).send("Server Error!");
-      }
-   
+  try {
+    // Code
+    const id = req.params.id;
+    const user = await User.findOne({ _id: id }).select("-password").exec();
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
 };
 exports.update = async (req, res) => {
     try {
@@ -41,11 +44,24 @@ exports.update = async (req, res) => {
 };
 exports.remove = async (req, res) => {
     try {
-        // Code
-        res.send('Hello remove person')
-      } catch (err) {
-        console.log(err);
-        res.status(500).send("Server Error!");
-      }
-   
+    // Code
+      const id = req.params.id;
+      const user = await User.findOneAndDelete({ _id: id });
+       res.send(user);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Server Error!");
+  }
+};
+exports.changerole = async (req, res) => {
+    try {
+    // Code
+      console.log(req.body)
+      //const id = req.params.id;
+     // const user = await User.findOneAndDelete({ _id: id });
+       //res.send(user);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Server Error!");
+  }
 };

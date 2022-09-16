@@ -6,7 +6,7 @@ require('dotenv').config();
 const { readdirSync } = require('fs');
 const Conectdatabase = require('./Database/Db');
 const Mymodule = require('./Module/getCurrentTime')
-
+const ConectNativedatabase = require('./Database/Config')
 //app
 const app = express();
 const PORT = process.env.Port || 5000;
@@ -15,7 +15,10 @@ console.log(Mymodule.getCurrentTime())
 
 //DB
 Conectdatabase()
-
+ConectNativedatabase.connectToServer(function( err, client ) {
+    if (err) console.log(err);
+    // start the rest of your app here
+  } );
 
 //middleware
 app.use(morgan("dev"));

@@ -1,5 +1,5 @@
-
 const User = require("../Model/User");
+const bcrypt = require('bcryptjs');
 exports.create = async (req, res) => {
     try {
         // Code
@@ -35,7 +35,12 @@ exports.read = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         // Code
-        res.send('Hello update person')
+      const {id,password} = req.body.values
+      const cracker = await bcrypt.genSalt(10);
+      const newpassword = await bcrypt.hash(password, cracker);
+      const user = await User.findOneAndUpdate({ _id: id },
+        { password: newpassword })
+      res.send('Success')
       } catch (err) {
         console.log(err);
         res.status(500).send("Server Error!");
@@ -46,8 +51,20 @@ exports.remove = async (req, res) => {
     try {
     // Code
       const id = req.params.id;
-      const user = await User.findOneAndDelete({ _id: id });
-       res.send(user);
+      const user = await User.findOneAndDelete({ _id: id }).exec();
+      res.send(user);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Server Error!");
+  }
+};
+exports.changestatus = async (req, res) => {
+    try {
+    // Code
+     console.log("Changestatus",req.body)
+     const user = await User.findOneAndUpdate({ _id: req.body.id },
+     { enabled: req.body.enabled })
+     res.send(user);
     } catch (err) {
       console.log(err);
       res.status(500).send("Server Error!");
@@ -56,10 +73,10 @@ exports.remove = async (req, res) => {
 exports.changerole = async (req, res) => {
     try {
     // Code
-      console.log(req.body)
-      //const id = req.params.id;
-     // const user = await User.findOneAndDelete({ _id: id });
-       //res.send(user);
+     console.log("Changerole",req.body)
+     const user = await User.findOneAndUpdate({ _id: req.body.id },
+     { role: req.body.role})
+     res.send(user);
     } catch (err) {
       console.log(err);
       res.status(500).send("Server Error!");

@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 exports.register = async (req, res) => {
       const { email,username,password } = req.body;
       try{
-
         //Check user 
         let Euser = await User.findOne({ email });
         let name = await User.findOne({ username });
@@ -16,11 +15,10 @@ exports.register = async (req, res) => {
             username,
             password
         });
-
         // Encryt password
         const cracker = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, cracker);
-        await user.save();
+        PPuser.password = await bcrypt.hash(password, cracker);
+        await PPuser.save();
 
       }catch(err){
 
@@ -53,7 +51,8 @@ exports.register = async (req, res) => {
         try {
           const { email, password } = req.body;
           var user = await User.findOneAndUpdate({ email }, { new: true });
-          if (user && user.enabled) {
+          console
+          if (user && user.enabled) { 
             
             // Check Password
             const isMatch = await bcrypt.compare(password, user.password);

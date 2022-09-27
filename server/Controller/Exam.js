@@ -45,14 +45,27 @@ exports.listexam = async (req, res) => {
   }
 
 }
-exports.currentExam = async (req, res) => {
+exports.currentExamChoices = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
   try {
     const exams = await db.collection('PPTEST').findOne({_id :ObjectId(id)})
-    console.log("Controller-Current-EXAM", exam);
+    console.log("Controller-Current-EXAM", exams);
     res.send(exams)
   } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
+exports.examChoicesAdd = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const { Num } = req.body
+  const str = await `exdata.No${Num}`
+  try {
+  const exams = await db.collection('PPTEST').findOneAndUpdate({_id:ObjectId(id)},{$set:{[str]:{"Question":"What is...","Choices":["Money","People","Mango","Eto","LOMO"]}}})
+  res.send('SuccessFull!')
+} catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
   }

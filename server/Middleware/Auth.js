@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require('../Model/User')
 
-function auth (req, res, next){
+function auth(req, res, next) {
   try {
     const token = req.headers['authtoken'];
     if (!token) {
@@ -15,15 +15,15 @@ function auth (req, res, next){
     res.status(401).send("Token ไม่ถูกต้อง");
   }
 }
-exports.auth = auth ;
+exports.auth = auth;
 
-exports.adminCheck = async(req, res, next) => {
+exports.adminCheck = async (req, res, next) => {
   try {
     const { username } = req.user
     const adminUser = await User.findOne({ username }).exec()
-    if(adminUser.role !== 'admin'){ 
-      res.status(403).send(err,'ปฏิเสธกรยืนยันตัวตน')
-    } else{
+    if (adminUser.role !== 'admin') {
+      res.status(403).send(err, 'ปฏิเสธกรยืนยันตัวตน')
+    } else {
       next()
     }
   } catch (err) {
@@ -31,4 +31,5 @@ exports.adminCheck = async(req, res, next) => {
     res.status(401).send("Role Admin ไม่ถูกต้อง ");
   }
 }
+
 

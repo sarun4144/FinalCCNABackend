@@ -8,7 +8,7 @@ const { auth,adminCheck } = require('../Middleware/Auth')
 router.get("/person",auth,adminCheck,list);
 router.get("/person/:id", read);
 router.post("/person",  create);
-router.put("/person/:id", update);
+router.put("/person/:id",auth,adminCheck,update);
 router.delete("/person/:id",auth,adminCheck,remove);
 
 

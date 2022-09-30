@@ -15,7 +15,7 @@ exports.register = async (req, res) => {
       username,
       password
     });
-    // Encryt password
+    // Encryt password  
     const cracker = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, cracker);
     await user.save();
@@ -53,7 +53,6 @@ exports.login = async (req, res) => {
     var user = await User.findOneAndUpdate({ email }, { new: true });
     console
     if (user && user.enabled) {
-
       // Check Password
       const isMatch = await bcrypt.compare(password, user.password);
 

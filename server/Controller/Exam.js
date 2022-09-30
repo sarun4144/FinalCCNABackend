@@ -63,7 +63,7 @@ exports.examChoicesAdd = async (req, res) => {
   const { Num } = req.body
   const str = await `exdata.No${Num}`
   try {
-  const exams = await db.collection('PPTEST').findOneAndUpdate({_id:ObjectId(id)},{$set:{[str]:{"Question":"What is...","Choices":["Money","People","Mango","Eto","LOMO"]}}})
+  await db.collection('PPTEST').UpdateOne({_id:ObjectId(id)},{$set:{[str]:{"Question":"What is...","Choices":["Money","People","Mango","Eto","LOMO"]}}})
   res.send('SuccessFull!')
 } catch (err) {
     console.log(err);

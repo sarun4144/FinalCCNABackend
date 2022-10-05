@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb')
 exports.examadd = async (req, res) => {
   var db = CCNA.getDb();
   try {
-    const { name, title } = req.body;
+    const { name, title,Categoryid } = req.body;
     //db pp
     let exname = await db.collection('PPTEST').findOne({ name })
     if (exname) {
@@ -17,6 +17,7 @@ exports.examadd = async (req, res) => {
       exdata: {
 
       },
+      Categoryid:ObjectId(Categoryid),
       date: new Date()
     },
       function (err, result) {
@@ -49,8 +50,8 @@ exports.currentExamChoices = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
   try {
-    const exams = await db.collection('PPTEST').findOne({_id :ObjectId(id)})
-    console.log("Controller-Current-EXAM", exams);
+    const exams = await db.collection('PPTEST').findOne({ _id: ObjectId(id) })
+    console.log("Controller-Current-EXAM", exams)
     res.send(exams)
   } catch (err) {
     console.log(err);
@@ -61,12 +62,58 @@ exports.examChoicesAdd = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
   const { Num } = req.body
-  const str = await `exdata.No${Num}`
+  const str = `exdata.${Num}`
   try {
-  await db.collection('PPTEST').UpdateOne({_id:ObjectId(id)},{$set:{[str]:{"Question":"What is...","Choices":["Money","People","Mango","Eto","LOMO"]}}})
-  res.send('SuccessFull!')
-} catch (err) {
+    console.log(str)
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": ["Money", "People", "Mango", "Eto", "LOMO"] } } })
+    res.send('SuccessFull!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!"); cv
+  }
+}
+exports.examChoicesDelete = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const Num = req.body.Num
+  const str = `exdata.${Num}`
+  try {
+   await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $unset: { [str]: {} } })
+   const exams = await db.collection('PPTEST').findOne({ _id: ObjectId(id) })
+    res.send(exams)
+  } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
   }
 }
+exports.examReset = async (req, res) => {
+  
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const payload = req.body;
+  try {
+
+   await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{"exdata":payload } })
+   res.send('DeleteSuccessFull!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
+exports.examChoicesChange = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const { Question, Choices,Num} = req.body;
+  const str = `exdata.${Num}`
+  const exam ={
+    Question:Question,
+    Choices: Choices
+  } 
+  try {
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:exam} })
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
+

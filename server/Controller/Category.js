@@ -7,7 +7,7 @@ exports.create = async (req, res) => {
     const { name } = req.body;
     let Cname = await db.collection("category").findOne({ name })
     if (Cname) {
-      console.log("CATEGORYNAME",Cname.name) 
+      console.log("CATEGORYNAME", Cname.name)
       return res.status(400).json('มี Category นี้แล้ว');
     }
     await db.collection("category").insertOne({

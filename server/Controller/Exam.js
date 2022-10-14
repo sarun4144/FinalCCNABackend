@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const CCNA = require('../Database/Config')
 const { ObjectId } = require('mongodb')
 
@@ -31,7 +30,6 @@ exports.examadd = async (req, res) => {
     console.log(err);
     res.status(500).send("Server Error!");
   }
-
 }
 
 exports.listexam = async (req, res) => {
@@ -86,15 +84,41 @@ exports.examChoicesDelete = async (req, res) => {
     res.status(500).send("Server Error!");
   }
 }
+exports.examChoicesAddChoice = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const { Num } = req.body
+  const str = `exdata.${Num}`
+  try {
+    console.log(str)
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": ["Money", "People", "Mango", "Eto", "LOMO"] } } })
+    res.send('SuccessFull!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!"); cv
+  }
+}
+exports.examChoicesDeleteChoice = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const Num = req.body.Num
+  const str = `exdata.${Num}`
+  try {
+   await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $unset: { [str]: {} } })
+   const exams = await db.collection('PPTEST').findOne({ _id: ObjectId(id) })
+    res.send(exams)
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
 exports.examReset = async (req, res) => {
-  
   var db = CCNA.getDb();
   const id = req.params.id;
   const payload = req.body;
   try {
-
    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{"exdata":payload } })
-   res.send('DeleteSuccessFull!')
+   res.send('Successful!!')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -111,6 +135,7 @@ exports.examChoicesChange = async (req, res) => {
   } 
   try {
     await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:exam} })
+    res.send('ChangeSuccessful!')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

@@ -2,7 +2,7 @@ const CCNA = require('../Database/Config')
 const { ObjectId } = require('mongodb')
 
 exports.examadd = async (req, res) => {
-  var db = CCNA.getDb();
+  var db = await CCNA.getDb();
   try {
     const { name, title,Categoryid } = req.body;
     //db pp
@@ -21,7 +21,7 @@ exports.examadd = async (req, res) => {
     },
       function (err, result) {
         console.log("1 document inserted");
-        res.send("1 document inserted")
+        res.status(200).send("1 document inserted")
       }
     )
     const Array = await db.collection('PPTEST').find().toArray()
@@ -37,7 +37,7 @@ exports.listexam = async (req, res) => {
   try {
     // Code
     const exams = await db.collection('PPTEST').find({}).toArray()
-    res.send(exams);
+    res.status(200).send(exams);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -50,7 +50,7 @@ exports.currentExamChoices = async (req, res) => {
   try {
     const exams = await db.collection('PPTEST').findOne({ _id: ObjectId(id) })
     console.log("Controller-Current-EXAM", exams)
-    res.send(exams)
+    res.status(200).send(exams)
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -64,7 +64,7 @@ exports.examChoicesAdd = async (req, res) => {
   try {
     console.log(str)
     await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": ["Money", "People", "Mango", "Eto", "LOMO"] } } })
-    res.send('SuccessFull!')
+    res.status(200).send('SuccessFull!')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!"); cv
@@ -78,7 +78,7 @@ exports.examChoicesDelete = async (req, res) => {
   try {
    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $unset: { [str]: {} } })
    const exams = await db.collection('PPTEST').findOne({ _id: ObjectId(id) })
-    res.send(exams)
+   res.status(200).send(exams)
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -92,7 +92,7 @@ exports.examChoicesAddChoice = async (req, res) => {
   try {
     console.log(str)
     await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": ["Money", "People", "Mango", "Eto", "LOMO"] } } })
-    res.send('SuccessFull!')
+    res.status(200).send('SuccessFull!')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!"); cv
@@ -106,7 +106,7 @@ exports.examChoicesDeleteChoice = async (req, res) => {
   try {
    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $unset: { [str]: {} } })
    const exams = await db.collection('PPTEST').findOne({ _id: ObjectId(id) })
-    res.send(exams)
+   res.status(200).send(exams)
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -118,7 +118,7 @@ exports.examReset = async (req, res) => {
   const payload = req.body;
   try {
    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{"exdata":payload } })
-   res.send('Successful!!')
+   res.status(200).send('Successful!!')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -135,7 +135,7 @@ exports.examChoicesChange = async (req, res) => {
   } 
   try {
     await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:exam} })
-    res.send('ChangeSuccessful!')
+    res.status(200).send('ChangeSuccessful!')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

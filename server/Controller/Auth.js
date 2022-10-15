@@ -40,18 +40,16 @@ exports.register = async (req, res) => {
     if (err) {
       throw err;
     }
-    res.json({ token, payload });
+    res.status(200).json({ token, payload });
 
   });
 
 }
-
-
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     var user = await User.findOneAndUpdate({ email }, { new: true });
-    console
+    
     if (user && user.enabled) {
       // Check Password
       const isMatch = await bcrypt.compare(password, user.password);
@@ -73,7 +71,7 @@ exports.login = async (req, res) => {
         if (err) {
           throw err;
         }
-        res.json({ token, payload });
+        res.status(200).json({ token, payload });
       });
 
     } else {
@@ -91,7 +89,7 @@ exports.currentUser = async (req, res) => {
     const user = await User.findOne({ username: req.user.username })
       .select('-password').exec();
     console.log("Controller-Current", user);
-    res.send(user)
+    res.status(200).send(user)
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

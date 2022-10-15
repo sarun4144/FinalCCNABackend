@@ -14,7 +14,7 @@ exports.create = async (req, res) => {
       name: name,
       date: new Date()
     })
-    res.send('Success')
+    res.status(200).send('Success')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -26,7 +26,7 @@ exports.list = async (req, res) => {
   try {
     // Code
     const category = await db.collection('category').find({}).toArray()
-    res.send(category);
+    res.status(200).send(category);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -39,7 +39,7 @@ exports.read = async (req, res) => {
     // Code
     const id = req.params.id;
     const name = await db.collection("category").findOne({ _id: ObjectId(id) }).exec();
-    res.send(name);
+    res.status(200).send(name);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -53,7 +53,7 @@ exports.update = async (req, res) => {
     const { name } = req.body;
     await db.collection("category").findOneAndUpdate({ _id: ObjectId(id) },
       { $set: { name: name } })
-    res.send('Success')
+    res.status(200).send('Success')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -66,7 +66,7 @@ exports.remove = async (req, res) => {
     // Code
     const id = req.params.id;
     const user = await db.collection("category").findOneAndDelete({ _id: ObjectId(id) })
-    res.send(user);
+    res.status(200).send(user);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

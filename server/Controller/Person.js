@@ -21,17 +21,6 @@ exports.list = async (req, res) => {
   }
    
 };
-exports.read = async (req, res) => {
-  try {
-    // Code
-    const id = req.params.id;
-    const user = await User.findOne({ _id: id }).select("-password").exec();
-    res.status(200).send(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Server Error!");
-  }
-};
 exports.update = async (req, res) => {
     try {
         // Code

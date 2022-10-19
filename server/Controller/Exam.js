@@ -151,4 +151,17 @@ exports.examChoicesChange = async (req, res) => {
     res.status(500).send("Server Error!");
   }
 }
+exports.examHeadChange = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const { QuestionName, title,Categoryid} = req.body;
+
+  try {
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{name:QuestionName,title:title,Categoryid:ObjectId(Categoryid)} })
+    res.status(200).send('ChangeSuccessful!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
 

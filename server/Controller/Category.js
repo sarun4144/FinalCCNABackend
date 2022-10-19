@@ -38,7 +38,7 @@ exports.read = async (req, res) => {
   try {
     // Code
     const id = req.params.id;
-    const name = await db.collection("category").findOne({ _id: ObjectId(id) }).exec();
+    const name = await db.collection("category").findOne({ _id: ObjectId(id) })
     res.status(200).send(name);
   } catch (err) {
     console.log(err);

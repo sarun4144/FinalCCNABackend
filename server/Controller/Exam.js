@@ -36,7 +36,12 @@ exports.listexam = async (req, res) => {
   var db = CCNA.getDb();
   try {
     // Code
-    const exams = await db.collection('PPTEST').find({}).toArray()
+    const exams = await db.collection('PPTEST').aggregate([{$lookup:{
+      from: "category",
+      localField: "Categoryid",
+      foreignField: "_id",
+      as: "CAT"
+    }}]).toArray()
     res.status(200).send(exams);
   } catch (err) {
     console.log(err);
@@ -48,7 +53,12 @@ exports.currentExamChoices = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
   try {
-    const exams = await db.collection('PPTEST').findOne({ _id: ObjectId(id) })
+    const exams = await db.collection('PPTEST').aggregate([{$match:{ _id: ObjectId(id) }},{$lookup:{
+      from: "category",
+      localField: "Categoryid",
+      foreignField: "_id",
+      as: "CAT"
+    }}]).toArray(  )
     console.log("Controller-Current-EXAM", exams)
     res.status(200).send(exams)
   } catch (err) {

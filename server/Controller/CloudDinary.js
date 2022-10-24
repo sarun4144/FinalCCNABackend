@@ -1,5 +1,5 @@
 const cloudinary = require("cloudinary");
-
+const CCNA = require('../Database/Config')
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -10,7 +10,8 @@ exports.createImage = async (req, res) => {
     var db = CCNA.getDb();
     try {
         // Code
-        const result = cloudinary.uploader.uploade(req.body.image,{
+        const result = await cloudinary.uploader.upload(
+            req.body.image,{
             public_id: Date.now(),
             resource_type: "auto", 
         })
@@ -25,8 +26,8 @@ exports.removeImage = async (req, res) => {
     var db = CCNA.getDb();
     try {
         // Code
-        const image_id = req.params.id;
-        cloudinary.uploader.destroy(image_id,(result) => {
+        const image_id = req.body.public_id;
+        await cloudinary.uploader.destroy(image_id,(result) => {
             res.status(200).send(result);
         })
        

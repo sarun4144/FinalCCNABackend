@@ -1,13 +1,13 @@
 const jwt = require("jsonwebtoken");
 const User = require('../Model/User')
 
-function auth(req, res, next) {
+async function auth(req, res, next) {
   try {
-    const token = req.headers['authtoken'];
+    const token = req.headers['authtoken']
     if (!token) {
       return res.status(401).send('ไม่ได้รับ Token, ปฏิเสธการยืนยันตัวตน');
     }
-    const decoded = jwt.verify(token, 'SecretToken');
+    const decoded =  jwt.verify(token, 'SecretToken');
     console.log("Current-Auth", decoded);
     req.user = decoded.user
     next()

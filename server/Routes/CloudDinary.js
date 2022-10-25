@@ -12,7 +12,7 @@ router.post("/images",auth,adminCheck ,createImage);
 router.post("/removeimages",auth,adminCheck ,removeImage);
 
 router.post("/Imageadd/:id",Imageadd);
-router.post("/Imageremove",Imageremove);
+router.post("/Imageremove/:id",Imageremove);
 
 
 module.exports = router;

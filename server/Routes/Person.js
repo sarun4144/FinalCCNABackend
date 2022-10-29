@@ -6,7 +6,7 @@ const { create,list, read, update,remove,changestatus,changerole,userProf} = req
 const { auth,adminCheck } = require('../Middleware/Auth')
 
 router.get("/person",auth,adminCheck,list);
-router.post("/person",  create);
+router.post("/person", create);
 router.put("/person/:id",auth,adminCheck,update);
 router.delete("/person/:id",auth,adminCheck,remove);
 

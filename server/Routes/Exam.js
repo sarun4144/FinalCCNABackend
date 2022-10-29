@@ -4,7 +4,7 @@ const { examadd,listexam,currentExamChoices,examChoicesAdd,examChoicesChange,exa
 const { auth,adminCheck } = require('../Middleware/Auth')
 
 router.get("/listexam",listexam);
-router.post("/examadd",examadd);
+router.post("/examadd",auth,adminCheck,examadd);
 router.post("/current-exam/:id",currentExamChoices);
 router.post("/examchoicesadd/:id",examChoicesAdd);
 router.post("/examChoiceschange/:id",examChoicesChange);

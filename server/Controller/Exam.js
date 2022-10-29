@@ -27,7 +27,7 @@ exports.examadd = async (req, res) => {
     const Array = await db.collection('PPTEST').find().toArray()
     console.log("DATA", Array)
   } catch {
-    console.log(err);
+    /*console.log(err);*/
     res.status(500).send("Server Error!");
   }
 }

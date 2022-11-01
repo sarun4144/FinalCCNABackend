@@ -73,7 +73,7 @@ exports.examChoicesAdd = async (req, res) => {
   const str = `exdata.${Num}`
   try {
     console.log(str)
-    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...","images":[],"Choices": ["Money", "People", "Mango", "Eto", "LOMO"] } } })
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...","images":[],"Choices": ["Money", "People", "Mango", "Eto", "LOMO"],"Answerdetail":"","CorrectANS":[] } } })
     res.status(200).send("Success!!")
   } catch (err) {
     console.log(err);
@@ -101,11 +101,11 @@ exports.examChoicesAddChoice = async (req, res) => {
   const str = `exdata.${Num}`
   try {
     console.log(str)
-    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": ["Money", "People", "Mango", "Eto", "LOMO"] } } })
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": ["Money", "People", "Mango", "Eto", "LOMO"],"Answerdeteil":"","CorrectANS":[] } } })
     res.status(200).send('SuccessFull!')
   } catch (err) {
     console.log(err);
-    res.status(500).send("Server Error!"); cv
+    res.status(500).send("Server Error!"); 
   }
 }
 exports.examChoicesDeleteChoice = async (req, res) => {
@@ -137,11 +137,14 @@ exports.examReset = async (req, res) => {
 exports.examChoicesChange = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
-  const { Question, Choices,Num} = req.body;
+  const { Question,images,Answerdetail,Choices,CorrectANS,Num} = req.body;
   const str = `exdata.${Num}`
   const exam ={
     Question:Question,
-    Choices: Choices
+    images:images,
+    Answerdetail:Answerdetail,
+    Choices: Choices,
+    CorrectANS:CorrectANS
   } 
   try {
     await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:exam} })
@@ -185,6 +188,19 @@ exports.Imageremove = async (req, res) => {
   try {
    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:images} })
     res.status(200).send('Delete Imgae Success!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
+exports.CorrectAnswer = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const {CorrectANS,Num} = req.body;
+  const str = `exdata.${Num}.CorrectANS`
+  try {
+   await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:CorrectANS} })
+    res.status(200).send('Correct Choice Change Complete!')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

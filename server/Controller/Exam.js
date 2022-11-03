@@ -58,7 +58,7 @@ exports.currentExamChoices = async (req, res) => {
       localField: "Categoryid",
       foreignField: "_id",
       as: "CAT"
-    }}]).toArray(  )
+    }}]).toArray()
     console.log("Controller-Current-EXAM", exams)
     res.status(200).send(exams)
   } catch (err) {

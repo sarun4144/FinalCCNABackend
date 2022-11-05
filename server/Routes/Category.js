@@ -6,7 +6,7 @@ const { create,list, read, update,remove} = require('../Controller/Category');
 const { auth,adminCheck } = require('../Middleware/Auth')
 
 router.get("/category",list);
-router.get("/category/:id",auth,read);
+router.get("/category/:id",read);
 router.post("/category",auth,adminCheck,create);
 router.put("/category/:id",auth,adminCheck,update);
 router.delete("/category/:id",auth,adminCheck,remove);

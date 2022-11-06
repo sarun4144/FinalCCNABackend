@@ -73,7 +73,7 @@ exports.examChoicesAdd = async (req, res) => {
   const str = `exdata.${Num}`
   try {
     console.log(str)
-    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...","images":[],"Choices": ["Money", "People", "Mango", "Eto", "LOMO"],"Answerdetail":"","CorrectANS":[] } } })
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...","images":[],"Choices": [{"text":"Money","isCorrect":false},{"text":"People","isCorrect":false}, {"text":"Mango","isCorrect":false}, {"text":"Eto","isCorrect":false}, {"text":"LOMO","isCorrect":false}],"Answerdetail":"","CorrectANS":[] } } })
     res.status(200).send("Success!!")
   } catch (err) {
     console.log(err);
@@ -101,7 +101,7 @@ exports.examChoicesAddChoice = async (req, res) => {
   const str = `exdata.${Num}`
   try {
     console.log(str)
-    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": ["Money", "People", "Mango", "Eto", "LOMO"],"Answerdeteil":"","CorrectANS":[] } } })
+    await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set: { [str]: { "Question": "What is...", "Choices": [{"text":"Money","isCorrect":false},{"text":"People","isCorrect":false}, {"text":"Mango","isCorrect":false}, {"text":"Eto","isCorrect":false}, {"text":"LOMO","isCorrect":false}],"Answerdeteil":"","CorrectANS":[] } } })
     res.status(200).send('SuccessFull!')
   } catch (err) {
     console.log(err);
@@ -196,10 +196,11 @@ exports.Imageremove = async (req, res) => {
 exports.CorrectAnswer = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
-  const {CorrectANS,Num} = req.body;
+  const {Choices,CorrectANS,Num} = req.body;
   const str = `exdata.${Num}.CorrectANS`
+  const str2 = `exdata.${Num}.Choices`
   try {
-   await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:CorrectANS} })
+   await db.collection('PPTEST').updateOne({ _id: ObjectId(id) }, { $set:{[str]:CorrectANS,[str2]:Choices}})
     res.status(200).send('Correct Choice Change Complete!')
   } catch (err) {
     console.log(err);

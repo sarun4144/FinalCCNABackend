@@ -7,11 +7,17 @@ const { readdirSync } = require('fs');
 const Conectdatabase = require('./Database/Db');
 const Mymodule = require('./Module/getCurrentTime')
 const ConectNativedatabase = require('./Database/Config')
+const cookieParser = require('cookie-parser')
+
 //app
 const app = express();
 const PORT = process.env.Port || 5000;
 app.listen(PORT,() => console.log(`Server is Running on port ${PORT}`));
 console.log(Mymodule.getCurrentTime())
+
+
+//cookie
+app.use(cookieParser())
 
 //DB
 Conectdatabase()

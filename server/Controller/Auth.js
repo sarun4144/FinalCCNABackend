@@ -13,7 +13,8 @@ exports.register = async (req, res) => {
     user = new User({
       email,
       username,
-      password
+      password,
+      
     });
     // Encryt password  
     const cracker = await bcrypt.genSalt(10);
@@ -86,7 +87,7 @@ exports.login = async (req, res) => {
 //admin and user use togather
 exports.currentUser = async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.user.username })
+    const user = await User.findOne({ _id: req.user.id })
       .select('-password').exec();
     console.log("Controller-Current", user);
     res.status(200).send(user)

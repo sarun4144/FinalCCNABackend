@@ -207,4 +207,29 @@ exports.CorrectAnswer = async (req, res) => {
     res.status(500).send("Server Error!");
   }
 }
+exports.Easyrecord = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const {Easy,UserID,Type,Num,Date,ExamObjectid} = req.body
+  const str = `Log.${Type}.${Num}`
+  try {
+    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Date:Date,Exam:Easy}}})
+    res.status(200).send('ADD COMPLETE!!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+} 
+exports.Hardrecord = async (req, res) => {
+  var db = CCNA.getDb();
+  const {Hard,UserID,Type,Num,Time,Date,ExamObjectid} = req.body
+  const str = `Log.${Type}.${Num}`
+  try {
+    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Time:Time,Date:Date,Exam:Hard}}})
+    res.status(200).send('ADD COMPLETE!!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
 

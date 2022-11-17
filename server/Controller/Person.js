@@ -24,8 +24,9 @@ exports.list = async (req, res) => {
 
 };
 exports.reads = async (req, res) => {
+  const id = req.params.id;
   try {
-    const user = await User.findOne({ username: req.user.username })
+    const user = await User.findOne({ _id: ObjectId(id)})
       .select('-password').exec();
     console.log("reads", user);
     res.status(200).send(user)
@@ -112,11 +113,18 @@ exports.Hardlog = async (req, res) => {
 exports.ChangeName = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
-  const username = req.body.values.username
+  const username = req.body.Newusername
+  console.log(username)
   try {
     // Code
-    await db.collection('users').updateOne({ _id:ObjectId(id)}, { $set:{username:username}})
-    res.status(200).send("OK");
+    let name = await User.findOne({ username });
+    if(name){
+      return res.status(400).json('มี username นี้แล้ว');
+    }else{
+      await db.collection('users').updateOne({ _id:ObjectId(id)}, { $set:{username:username}})
+      res.status(200).send("OK");
+    }
+   
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

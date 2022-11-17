@@ -7,7 +7,7 @@ const { auth,adminCheck } = require('../Middleware/Auth')
 
 router.get("/person",auth,adminCheck,list);
 
-router.get("/reads",auth,reads);
+router.get("/reads/:id",reads);
 
 router.post("/person", create);
 router.put("/person/:id",auth,adminCheck,update);
@@ -20,6 +20,6 @@ router.post("/change-role",auth,adminCheck,changerole);
 router.post("/Easylog/:id",Easylog);
 router.post("/Hardlog/:id",Hardlog);
 
-router.put("/ChangeName/:id",ChangeName);
+router.put("/ChangeName/:id",auth,ChangeName);
 
 module.exports = router;

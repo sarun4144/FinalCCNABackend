@@ -18,14 +18,15 @@ exports.examadd = async (req, res) => {
       },
       Categoryid:ObjectId(Categoryid),
       date: new Date()
-    },
-      function (err, result) {
-        console.log("1 document inserted");
-        res.status(200).send("1 document inserted")
-      }
-    )
+    })
     const Array = await db.collection('PPTEST').find().toArray()
-    console.log("DATA", Array)
+    const Name = await db.collection('PPTEST').findOne({name})
+    const ADDValue={
+      Name:Name.name,
+      Id:Name._id
+    }
+    res.status(200).send(ADDValue)
+    console.log("DATA", Name)
   } catch {
     /*console.log(err);*/
     res.status(500).send("Server Error!");

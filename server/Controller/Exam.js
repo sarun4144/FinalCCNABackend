@@ -211,10 +211,11 @@ exports.CorrectAnswer = async (req, res) => {
 exports.Easyrecord = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
-  const {Easy,UserID,Type,Num,Date,ExamObjectid} = req.body
+  const {Easy,UserID,Type,Num,Date,ExamObjectid,Examname,Title,Category,Score} = req.body
   const str = `Log.${Type}.${Num}`
   try {
-    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Date:Date,Exam:Easy}}})
+    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
+      Score:Score,Date:Date,Exam:Easy}}})
     res.status(200).send('ADD COMPLETE!!')
   } catch (err) {
     console.log(err);
@@ -223,11 +224,25 @@ exports.Easyrecord = async (req, res) => {
 } 
 exports.Hardrecord = async (req, res) => {
   var db = CCNA.getDb();
-  const {Hard,UserID,Type,Num,Time,Date,ExamObjectid} = req.body
+  const {Hard,UserID,Type,Num,Time,Date,ExamObjectid,Examname,Title,Category,Score} = req.body
   const str = `Log.${Type}.${Num}`
   try {
-    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Time:Time,Date:Date,Exam:Hard}}})
+    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
+      Score:Score,Time:Time,Date:Date,Exam:Hard}}})
     res.status(200).send('ADD COMPLETE!!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
+exports.CountStamp = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const {Docount} = req.body
+  try {
+    await db.collection('PPTEST').updateOne({ _id:ObjectId(id)},{$set:{Docount:Docount}})
+   console.log(Docount)
+    res.status(200).send("Stamp");
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

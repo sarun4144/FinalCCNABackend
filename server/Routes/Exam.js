@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { examadd,listexam,currentExamChoices,examChoicesAdd,examChoicesChange,examChoicesDelete,examReset,examChoicesAddChoice,examChoicesDeleteChoice,examHeadChange,CorrectAnswer
-,Easyrecord,Hardrecord} = require("../Controller/Exam");
+const { examadd,listexam,currentExamChoices,examChoicesAdd,examChoicesChange,examChoicesDelete,examReset,examChoicesAddChoice,examChoicesDeleteChoice,
+examHeadChange,CorrectAnswer
+,Easyrecord,Hardrecord,CountStamp} = require("../Controller/Exam");
 const { auth,adminCheck } = require('../Middleware/Auth')
 
 router.get("/listexam",listexam);
@@ -18,6 +19,8 @@ router.post("/CorrectAnswer/:id",CorrectAnswer);
 
 router.post("/Easyrecord/:id",Easyrecord);
 router.post("/Hardrecord/:id",Hardrecord);
+
+router.post("/CountStamp/:id",CountStamp);
 
 
 

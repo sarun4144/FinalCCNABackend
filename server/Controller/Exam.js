@@ -60,6 +60,7 @@ exports.currentExamChoices = async (req, res) => {
       as: "CAT"
     }}]).toArray()
     console.log("Controller-Current-EXAM", exams)
+    console.log("Controller-Current-EXAMID", id)
     res.status(200).send(exams)
   } catch (err) {
     console.log(err);

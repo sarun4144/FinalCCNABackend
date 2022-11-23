@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { create,list, reads, update,remove,changestatus,changerole,userProf,Easylog,Hardlog,ChangeName,HardlogS} = require('../Controller/Person');
+const { create,list, reads, update,remove,changestatus,changerole,userProf,Easylog,Hardlog,ChangeName,HardlogS,EastlogS} = require('../Controller/Person');
 
 // middleware
 const { auth,adminCheck } = require('../Middleware/Auth')
@@ -21,6 +21,7 @@ router.post("/Easylog/:id",Easylog);
 router.post("/Hardlog/:id",Hardlog);
 
 router.post("/HardlogS/:id",HardlogS);
+router.post("/EastlogS/:id",EastlogS);
 
 
 

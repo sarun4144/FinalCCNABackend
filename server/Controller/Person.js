@@ -123,6 +123,19 @@ exports.HardlogS = async (req, res) => {
     res.status(500).send("Server Error!");
   }
 };
+exports.EastlogS = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+  const {Index} = req.body
+  try {
+    // Code
+    let exname = await db.collection('users').findOne({ _id:ObjectId(id)})
+    res.status(200).send(exname.Log.Easy[Index]);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+};
 exports.ChangeName = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;

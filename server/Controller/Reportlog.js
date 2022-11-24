@@ -7,7 +7,7 @@ exports.Reportadd = async (req, res) => {
     const id  = req.params.id;
     const {Name} = req.body;
     try {
-            await db.collection('Report').insertOne({ExamId:ObjectId(id),ExName:Name,date: new Date(),Log:{}})
+            await db.collection('Report').insertOne({ExamId:ObjectId(id),ExName:Name,date: new Date(),Log:[]})
             res.status(200).send("Complete")
     } catch {
   
@@ -27,14 +27,26 @@ exports.Rerecordlist= async (req, res) => {
       res.status(500).send("Server Error!");
     }
   }
+exports.Repotlist= async (req, res) => {
+    var db = await CCNA.getDb();
+    try {
+           const Data= await db.collection('Report').find().toArray()
+            // await db.collection('Report').updateOne({ExamId:ObjectId(id),ExName:Name,date: new Date()})
+        console.log(Data)
+    res.status(200).send(Data)
+    } catch {
+  
+      res.status(500).send("Server Error!");
+    }
+  }
 exports.Rerecord = async (req, res) => {
     var db = await CCNA.getDb();
     const id  = req.params.id;
-    const {Name,Text,Num,Username,mark} = req.body;
-    const str = `Log.${mark}`
+    const LOGs = req.body;
+
     try {
 
-        await db.collection('Report').updateOne({ExamId:ObjectId(id)},{$set:{[str]:{Number:Num,Name:Name,Username:Username,Text:Text}}})
+        await db.collection('Report').updateOne({ExamId:ObjectId(id)},{$set:{Log:LOGs}})
 
     res.status(200).send("Complete")
     } catch {

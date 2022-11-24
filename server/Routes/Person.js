@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { create,list, reads, update,remove,changestatus,changerole,userProf,Easylog,Hardlog,ChangeName,HardlogS,EastlogS} = require('../Controller/Person');
-const {Reportadd,Rerecord,Rerecordlist} = require("../Controller/Reportlog")
+const {Reportadd,Rerecord,Rerecordlist,Repotlist} = require("../Controller/Reportlog")
 
 // middleware
 const { auth,adminCheck } = require('../Middleware/Auth')
@@ -34,6 +34,8 @@ router.post("/Reportadd/:id",Reportadd);
 router.post("/Rerecord/:id",Rerecord);
 
 router.post("/Rerecordlist/:id",Rerecordlist);
+
+router.get("/Repotlist",Repotlist);
 
 
 module.exports = router;

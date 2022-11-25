@@ -156,4 +156,17 @@ exports.ChangeName = async (req, res) => {
     res.status(500).send("Server Error!");
   }
 };
+exports.Catrecord = async (req, res) => {
+  var db = CCNA.getDb();
+  const {Num,Category,UserID} = req.body
+ 
+  try {
+    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{Category:[Category]}})
+    console.log("adadad",req.body)
+    res.status(200).send('Catrecord COMPLETE!!')
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}
 

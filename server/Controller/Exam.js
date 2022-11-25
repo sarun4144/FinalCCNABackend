@@ -250,3 +250,16 @@ exports.CountStamp = async (req, res) => {
   }
 }
 
+exports.removeExam = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+ 
+  try {
+    await db.collection('PPTEST').deleteOne({ _id:ObjectId(id)})
+  
+    res.status(200).send("Delete Complete");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}

@@ -217,7 +217,7 @@ exports.Easyrecord = async (req, res) => {
   try {
     await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
       Score:Score,Date:Date,Exam:Easy}}})
-    res.status(200).send('ADD COMPLETE!!')
+    res.status(200).send('Record Complete!! Do you want to do again?')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");

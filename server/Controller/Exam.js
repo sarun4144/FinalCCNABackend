@@ -261,8 +261,8 @@ exports.Hardrecord = async (req, res) => {
   const {Hard,UserID,Type,Num,Time,Date,ExamObjectid,Examname,Title,Category,Score} = req.body
   const str = `Log.${Type}.${Num}`
   try {
-    // await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
-    //   Score:Score,Time:Time,Date:Date,Exam:Hard}}})
+    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
+      Score:Score,Time:Time,Date:Date,Exam:Hard}}})
     res.status(200).send('ADD COMPLETE!!')
   } catch (err) {
     console.log(err);

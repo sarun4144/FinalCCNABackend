@@ -19,7 +19,6 @@ exports.examadd = async (req, res) => {
       Categoryid:ObjectId(Categoryid),
       date: new Date()
     })
-    const Array = await db.collection('PPTEST').find().toArray()
     const Name = await db.collection('PPTEST').findOne({name})
     const ADDValue={
       Name:Name.name,
@@ -44,6 +43,40 @@ exports.listexam = async (req, res) => {
       as: "CAT"
     }}]).toArray()
     res.status(200).send(exams);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+
+}
+exports.listexamSort = async (req, res) => {
+  var db = CCNA.getDb();
+  try {
+    // Code
+    const exams = await db.collection('PPTEST').aggregate([{$lookup:{
+      from: "category",
+      localField: "Categoryid",
+      foreignField: "_id",
+      as: "CAT"
+    }},{$sort:{Docount:-1}}]).toArray()
+    res.status(200).send(exams);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+
+}
+exports.listexamSortDate = async (req, res) => {
+  var db = CCNA.getDb();
+  try {
+    // Code
+    const exams2 = await db.collection('PPTEST').aggregate([{$lookup:{
+      from: "category",
+      localField: "Categoryid",
+      foreignField: "_id",
+      as: "CAT"
+    }},{$sort:{date:-1}}]).toArray()
+    res.status(200).send(exams2);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -228,8 +261,8 @@ exports.Hardrecord = async (req, res) => {
   const {Hard,UserID,Type,Num,Time,Date,ExamObjectid,Examname,Title,Category,Score} = req.body
   const str = `Log.${Type}.${Num}`
   try {
-    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
-      Score:Score,Time:Time,Date:Date,Exam:Hard}}})
+    // await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
+    //   Score:Score,Time:Time,Date:Date,Exam:Hard}}})
     res.status(200).send('ADD COMPLETE!!')
   } catch (err) {
     console.log(err);

@@ -123,7 +123,7 @@ exports.HardlogS = async (req, res) => {
     res.status(500).send("Server Error!");
   }
 };
-exports.EastlogS = async (req, res) => {
+exports.EasylogS = async (req, res) => {
   var db = CCNA.getDb();
   const id = req.params.id;
   const {Index} = req.body
@@ -158,11 +158,12 @@ exports.ChangeName = async (req, res) => {
 };
 exports.Catrecord = async (req, res) => {
   var db = CCNA.getDb();
-  const {Num,Category,UserID} = req.body
- 
+  const {Category,UserID} = req.body
+  const str = `${Category}`
   try {
-    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{Category:[Category]}})
-    console.log("adadad",req.body)
+    let Cat = await db.collection('users').aggregate([{ $match:{_id:ObjectId(UserID)}},{$project:{_id:0,[str]:1}}]).toArray()
+    await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:1}})
+    console.log(Cat)
     res.status(200).send('Catrecord COMPLETE!!')
   } catch (err) {
     console.log(err);

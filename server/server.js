@@ -34,4 +34,8 @@ app.use(cors())
 
 //route
 // readdirSync('./Routes').map((r) => app.use("/api", require('./Routes/' + r)));
-app.use('/api',require('./Routes/api'))
+app.use('/api',require('./Routes/Auth'))
+app.use('/api',require('./Routes/Category'))
+app.use('/api',require('./Routes/CloudDinary'))
+app.use('/api',require('./Routes/Exam'))
+app.use('/api',require('./Routes/Person'))

@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
-const fs = require('fs');
+const {readdirSync} = require('fs');
 const Conectdatabase = require('./Database/Db');
 const Mymodule = require('./Module/getCurrentTime')
 const ConectNativedatabase = require('./Database/Config')
@@ -37,7 +37,7 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors())
 
 //route
-// fs.readdirSync("./Routes").map((r) => app.use("/api", require('./Routes/' + r)));
+// readdirSync("./Routes").map((r) => app.use("/api", require('./Routes/' + r)));
 
 app.use('/Auth',Auth)
 app.use('/Category',Category)

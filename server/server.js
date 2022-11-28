@@ -37,10 +37,10 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors())
 
 //route
-fs.readdirSync("./Routes").map((r) => app.use("/api", require('./Routes/' + r)));
+// fs.readdirSync("./Routes").map((r) => app.use("/api", require('./Routes/' + r)));
 
-// app.use('/Auth',Auth)
-// app.use('/Category',Category)
-// app.use('/Cloud',Cloud)
-// app.use('/Exam',Exam)
-// app.use('/Person',Person)
+app.use('/Auth',Auth)
+app.use('/Category',Category)
+app.use('/Cloud',Cloud)
+app.use('/Exam',Exam)
+app.use('/Person',Person)

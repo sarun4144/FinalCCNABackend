@@ -14,7 +14,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 app.listen(PORT,() => console.log(`Server is Running on port ${PORT}`));
 console.log(Mymodule.getCurrentTime())
-
+//route
+readdirSync('./Routes').map((r) => app.use("/api", require('./Routes/' + r)));
 
 //cookie
 app.use(cookieParser())
@@ -32,5 +33,3 @@ app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors())
 
 
-//route
-readdirSync('./Routes').map((r) => app.use("/api", require('./Routes/' + r)));

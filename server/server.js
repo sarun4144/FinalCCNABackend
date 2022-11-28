@@ -20,7 +20,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT,() => console.log(`Server is Running on port ${PORT}`));
 console.log(Mymodule.getCurrentTime())
 
-
 //cookie
 app.use(cookieParser())
 

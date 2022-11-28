@@ -45,7 +45,7 @@ exports.listexam = async (req, res) => {
     res.status(200).send(exams);
   } catch (err) {
     console.log(err);
-    res.status(500).send("Server Error!");
+    res.status(500).send("listexamError");
   }
 
 }

@@ -7,7 +7,7 @@ module.exports = {
 
   connectToServer: function( callback ) {
     MongoClient.connect( url,  { useNewUrlParser: true }, function( err, client ) {
-      _db  = client.db("CCNA");
+      _db  = client.db();
       console.log('Connect Mongo DB')
       return callback( err );
     } );

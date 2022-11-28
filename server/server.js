@@ -33,4 +33,4 @@ app.use(cors())
 
 
 //route
-readdirSync('./Route').map((r) => app.use("/api", require('./Route/' + r)));
+readdirSync('./Routes').map((r) => app.use("/api", require('./Routes/' + r)));

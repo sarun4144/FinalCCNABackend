@@ -9,11 +9,11 @@ const Mymodule = require('./Module/getCurrentTime')
 const ConectNativedatabase = require('./Database/Config')
 const cookieParser = require('cookie-parser')
 
-// const Auth = require('./Routes/Auth')
-// const Category = require('./Routes/Category')
-// const Cloud = require('./Routes/CloudDinary')
-// const Exam = require('./Routes/Exam')
-// const Person = require('./Routes/Person')
+const Auth = require('./Routes/Auth')
+const Category = require('./Routes/Category')
+const Cloud = require('./Routes/CloudDinary')
+const Exam = require('./Routes/Exam')
+const Person = require('./Routes/Person')
 //app
 const app = express();
 const PORT = process.env.PORT || 5000;

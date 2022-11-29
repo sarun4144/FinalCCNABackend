@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
       });
 
     } else {
-      return res.status(400).send("ไม่มี Email หรือ Username ในระบบ'");
+      return res.status(400).send("ไม่มี Email ในระบบ'");
     }
 
   } catch (err) {

@@ -6,7 +6,7 @@ const {Reportadd,Rerecord,Rerecordlist,Repotlist} = require("../Controller/Repor
 // middleware
 const { auth,adminCheck } = require('../Middleware/Auth')
 
-router.get("/person",auth,adminCheck,list);
+router.get("/person",list);
 
 router.get("/reads/:id",reads);
 

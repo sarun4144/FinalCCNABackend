@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { create,list, reads, update,remove,changestatus,changerole,userProf,Easylog,Hardlog,ChangeName,HardlogS,EastlogS} = require('../Controller/Person');
+const { create,list, reads, update,remove,changestatus,changerole,userProf,Easylog,Hardlog,ChangeName,HardlogS,EasylogS,Catrecord} = require('../Controller/Person');
 const {Reportadd,Rerecord,Rerecordlist,Repotlist} = require("../Controller/Reportlog")
 
 // middleware
@@ -22,7 +22,7 @@ router.post("/Easylog/:id",Easylog);
 router.post("/Hardlog/:id",Hardlog);
 
 router.post("/HardlogS/:id",HardlogS);
-router.post("/EastlogS/:id",EastlogS);
+router.post("/EasylogS/:id",EasylogS);
 
 
 
@@ -36,6 +36,8 @@ router.post("/Rerecord/:id",Rerecord);
 router.post("/Rerecordlist/:id",Rerecordlist);
 
 router.get("/Repotlist",Repotlist);
+
+router.post("/Catrecord",Catrecord);
 
 
 module.exports = router;

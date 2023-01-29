@@ -19,7 +19,6 @@ exports.examadd = async (req, res) => {
       Categoryid:ObjectId(Categoryid),
       date: new Date()
     })
-    const Array = await db.collection('PPTEST').find().toArray()
     const Name = await db.collection('PPTEST').findOne({name})
     const ADDValue={
       Name:Name.name,
@@ -44,6 +43,40 @@ exports.listexam = async (req, res) => {
       as: "CAT"
     }}]).toArray()
     res.status(200).send(exams);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("listexamError");
+  }
+
+}
+exports.listexamSort = async (req, res) => {
+  var db = CCNA.getDb();
+  try {
+    // Code
+    const exams = await db.collection('PPTEST').aggregate([{$lookup:{
+      from: "category",
+      localField: "Categoryid",
+      foreignField: "_id",
+      as: "CAT"
+    }},{$sort:{Docount:-1}}]).toArray()
+    res.status(200).send(exams);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+
+}
+exports.listexamSortDate = async (req, res) => {
+  var db = CCNA.getDb();
+  try {
+    // Code
+    const exams2 = await db.collection('PPTEST').aggregate([{$lookup:{
+      from: "category",
+      localField: "Categoryid",
+      foreignField: "_id",
+      as: "CAT"
+    }},{$sort:{date:-1}}]).toArray()
+    res.status(200).send(exams2);
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -217,7 +250,7 @@ exports.Easyrecord = async (req, res) => {
   try {
     await db.collection('users').updateOne({ _id:ObjectId(UserID)}, { $set:{[str]:{ExamObjectid:ObjectId(ExamObjectid),Examname:Examname,Title:Title,Category:Category,
       Score:Score,Date:Date,Exam:Easy}}})
-    res.status(200).send('ADD COMPLETE!!')
+    res.status(200).send('Record Complete!! Do you want to do again?')
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
@@ -250,3 +283,16 @@ exports.CountStamp = async (req, res) => {
   }
 }
 
+exports.removeExam = async (req, res) => {
+  var db = CCNA.getDb();
+  const id = req.params.id;
+ 
+  try {
+    await db.collection('PPTEST').deleteOne({ _id:ObjectId(id)})
+  
+    res.status(200).send("Delete Complete");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error!");
+  }
+}

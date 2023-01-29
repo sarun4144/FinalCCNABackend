@@ -65,8 +65,16 @@ exports.remove = async (req, res) => {
   try {
     // Code
     const id = req.params.id;
-    const user = await db.collection("category").findOneAndDelete({ _id: ObjectId(id) })
-    res.status(200).send(user);
+    const Exam = await db.collection('PPTEST').findOne({Categoryid: ObjectId(id) })
+    if(Exam){
+      console.log(Exam)
+      res.status(400).send("Have exam use thi Category");
+    }else{
+      await db.collection("category").findOneAndDelete({ _id: ObjectId(id) })
+    
+      res.status(200).send("Delete Complete");
+    }
+      
   } catch (err) {
     console.log(err);
     res.status(500).send("Server Error!");
